@@ -1,0 +1,1 @@
+export { PageVisualSnapshot } from './PageVisualSnapshot';

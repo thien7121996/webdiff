@@ -1,0 +1,1 @@
+export { CompareImageDetail } from './CompareImageDetail';
