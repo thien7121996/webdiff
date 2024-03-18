@@ -17,17 +17,20 @@ import { ProjectDetail } from './ProjectDetail';
 type Props = {
 	infoProjectDetail: ProjectType;
 	setProjectDetail: Dispatch<SetStateAction<ProjectType>>;
+	projectId: string;
 };
 
 export const ListPageSnapShot: FC<Props> = ({
 	infoProjectDetail,
 	setProjectDetail,
+	projectId,
 }) => {
 	const {
 		boolean: activeModal,
 		toggle: toggleActiveModal,
 		setFalse: setCloseModal,
 	} = useBooleanState(false);
+	const [idProject, setIdProject] = useState<string>();
 
 	const [listPageSnapShot, setListPageSnapShot] = useState<PageSnapShotType[]>(
 		[]
@@ -41,24 +44,11 @@ export const ListPageSnapShot: FC<Props> = ({
 	const [pageSnapshotCurrent, setPageSnapshotCurrent] =
 		useState<PageSnapShotType>();
 
-	useEffect(() => {
-		if (
-			infoProjectDetail.pageSnapShot &&
-			infoProjectDetail.pageSnapShot.length > 0
-		) {
-			const pageSnapShot = infoProjectDetail.pageSnapShot;
-			setListPageSnapShot(pageSnapShot);
-		}
-	}, [infoProjectDetail, infoProjectDetail.pageSnapShot]);
-
 	const handleGetDetailProject = useCallback(async () => {
-		if (!infoProjectDetail.id) {
-			return;
-		}
-
 		try {
-			const getProjectDetail = await getDetailProject(infoProjectDetail.id);
+			const getProjectDetail = await getDetailProject(projectId);
 			const projectDetail = getProjectDetail.data;
+
 			setListPageSnapShot(getProjectDetail.data.pageSnapShot);
 			setProjectDetail(projectDetail);
 			setPageSnapshotCurrent(prev => {
@@ -72,8 +62,12 @@ export const ListPageSnapShot: FC<Props> = ({
 			});
 		} catch (error) {}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	}, [projectId]);
 
+	useEffect(() => {
+		handleGetDetailProject();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [projectId]);
 	return (
 		<div>
 			<HistoryCheckModal

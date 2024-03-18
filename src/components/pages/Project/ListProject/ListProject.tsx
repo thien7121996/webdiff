@@ -33,9 +33,8 @@ export const ListProject: FC<Props> = ({ listProjectData }) => {
 	}, [reloadData]);
 
 	useEffect(() => {
-		if (isFirstRender) {
-			getListProjects();
-		}
+		getListProjects();
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
@@ -64,7 +63,7 @@ export const ListProject: FC<Props> = ({ listProjectData }) => {
 				<BlockProjectAdd setReloadData={setReloadData} />
 			</div>
 			<div className="-mx-4 flex flex-wrap justify-start">
-				{listProjects.map(project => (
+				{listProjects?.map(project => (
 					<div
 						key={project.id}
 						className="w-full px-2 md:w-2/3 lg:w-1/2 xl:w-1/4 mb-4"

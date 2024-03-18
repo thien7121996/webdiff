@@ -3,10 +3,6 @@ import Breadcrumb from '@/components/pages/Common/Breadcrumb';
 import { ListProject } from '@/components/pages/Project/ListProject';
 import { ProjectType } from '@/models/project.model';
 import { NextPageWithLayout } from '@/pages/_app';
-import { getProject } from '@/services/project';
-import { parseCookieString } from '@/utils/cookie/getCookies';
-import { uniqueId } from 'lodash';
-import { GetServerSideProps } from 'next';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -14,6 +10,7 @@ type Props = {
 };
 
 const Projects: NextPageWithLayout<Props> = ({ projecList }) => {
+	const projectList = [];
 	return (
 		<>
 			<Breadcrumb
@@ -29,37 +26,6 @@ const Projects: NextPageWithLayout<Props> = ({ projecList }) => {
 	);
 };
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-	const cookieToken = { value: '' };
-	const { cookie } = req.headers;
-	if (cookie) {
-		const cookieObject = parseCookieString(cookie);
-		if (cookieObject) {
-			cookieToken.value = cookieObject.uuid;
-		}
-	} else {
-		return {
-			notFound: true,
-		};
-	}
-
-	try {
-		const getProjectList = await getProject(cookieToken.value);
-		const projecList = getProjectList.data;
-		const key = uniqueId();
-
-		return {
-			props: {
-				projecList,
-				key,
-			},
-		};
-	} catch (error) {
-		return {
-			notFound: true,
-		};
-	}
-};
 export default Projects;
 
 Projects.getLayout = (page: ReactNode) => <Layout>{page}</Layout>;

@@ -3,9 +3,7 @@ import Breadcrumb from '@/components/pages/Common/Breadcrumb';
 import { ListPageSnapShot } from '@/components/pages/ProjectDetail/ListPageSnapShot';
 import { ProjectType } from '@/models/project.model';
 import { NextPageWithLayout } from '@/pages/_app';
-import { getDetailProject } from '@/services/project';
-import { uniqueId } from 'lodash';
-import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useState } from 'react';
 
 type Props = {
@@ -17,7 +15,9 @@ const ProjectDetailPage: NextPageWithLayout<Props> = ({
 }) => {
 	const [projectDetail, setProjectDetail] =
 		useState<ProjectType>(infoProjectDetail);
+	const router = useRouter();
 
+	const { projectId } = router.query;
 	useEffect(() => {
 		setProjectDetail(infoProjectDetail);
 	}, [infoProjectDetail]);
@@ -31,6 +31,7 @@ const ProjectDetailPage: NextPageWithLayout<Props> = ({
 			<section className="pb-[120px] pt-[20px]">
 				<div className="container">
 					<ListPageSnapShot
+						projectId={projectId as string}
 						infoProjectDetail={projectDetail}
 						setProjectDetail={setProjectDetail}
 					/>
@@ -38,31 +39,6 @@ const ProjectDetailPage: NextPageWithLayout<Props> = ({
 			</section>
 		</>
 	);
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-	const projectId = params?.projectId;
-
-	if (typeof projectId !== 'string') {
-		return { notFound: true };
-	}
-
-	try {
-		const getProjectDetail = await getDetailProject(projectId);
-		const infoProjectDetail = getProjectDetail.data;
-		const key = uniqueId();
-
-		return {
-			props: {
-				infoProjectDetail,
-				key,
-			},
-		};
-	} catch (error) {
-		return {
-			notFound: true,
-		};
-	}
 };
 
 export default ProjectDetailPage;

@@ -2,7 +2,7 @@ import { Layout } from '@/components/layout';
 import Breadcrumb from '@/components/pages/Common/Breadcrumb';
 import { CompareImagePage } from '@/components/pages/CompareImagePage';
 import { NextPageWithLayout } from '@/pages/_app';
-import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 import { ReactNode } from 'react';
 
 type Props = {
@@ -10,10 +10,9 @@ type Props = {
 	snapShotId: string;
 };
 
-const ProjectDetailPage: NextPageWithLayout<Props> = ({
-	projectId,
-	snapShotId,
-}) => {
+const ProjectDetailPage: NextPageWithLayout = () => {
+	const router = useRouter();
+	const { projectId, snapShotId } = router.query;
 	return (
 		<>
 			<Breadcrumb
@@ -22,22 +21,14 @@ const ProjectDetailPage: NextPageWithLayout<Props> = ({
 			/>
 			<section className="pb-[120px] pt-[20px]">
 				<div className="container">
-					<CompareImagePage projectId={projectId} snapShotId={snapShotId} />
+					<CompareImagePage
+						projectId={projectId as string}
+						snapShotId={snapShotId as string}
+					/>
 				</div>
 			</section>
 		</>
 	);
-};
-
-export const getServerSideProps: GetServerSideProps = async ({ params }) => {
-	const projectId = params?.projectId;
-	const snapShotId = params?.snapshotId;
-
-	if (!projectId || !snapShotId) {
-		return { notFound: true };
-	}
-
-	return { props: { projectId, snapShotId } };
 };
 
 ProjectDetailPage.getLayout = (page: ReactNode) => <Layout>{page}</Layout>;
