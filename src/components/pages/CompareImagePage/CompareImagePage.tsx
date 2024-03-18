@@ -1,9 +1,8 @@
 import Loader from '@/components/admin/common/Loader';
-import { useScreenshot } from '@/components/pages/ProjectDetail/ListPageSnapShot/ProjectDetail/screenshot.hooks';
-import { first } from 'lodash';
-import { FC } from 'react';
+import { getDetailProject } from '@/services/project';
+import { first, keyBy } from 'lodash';
+import { FC, useEffect, useState } from 'react';
 import { CompareImageDetail } from './CompareImageDetail';
-import { useProjectDetail } from './projectDetail.hooks';
 
 type Props = {
 	projectId: string;
@@ -11,22 +10,40 @@ type Props = {
 };
 
 export const CompareImagePage: FC<Props> = ({ projectId, snapShotId }) => {
-	const { handleScreenShot } = useScreenshot();
+	const [pageSnapShotObject, setPageSnapShotObject] = useState<any>();
+	const [isLoading, setIsLoading] = useState(true);
+	const [snapId, setSnapId] = useState<string>(snapShotId);
 
-	const { isLoading, pageSnapShotObject } = useProjectDetail(projectId);
+	const handleGetDetailProject = async () => {
+		try {
+			const getProjectDetail = await getDetailProject(projectId);
+			const projectDetail = getProjectDetail.data;
+			const getPageSnapShotObject = keyBy(projectDetail?.pageSnapShot, 'id');
+			setPageSnapShotObject(getPageSnapShotObject);
+			setIsLoading(false);
+		} catch (error) {}
+	};
+
+	useEffect(() => {
+		handleGetDetailProject();
+		setSnapId(snapShotId);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [projectId, snapShotId]);
 
 	return isLoading ? (
 		<Loader />
 	) : (
-		<CompareImageDetail
-			projectId={projectId}
-			snapShotId={snapShotId}
-			snapShotObject={pageSnapShotObject[snapShotId]}
-			snapShotUrl={pageSnapShotObject[snapShotId].url}
-			snapShotItemPath={pageSnapShotObject[snapShotId].path}
-			newestPageVisualSnapshot={first(
-				pageSnapShotObject[snapShotId].pageVisualSnapShot
-			)}
-		/>
+		pageSnapShotObject && snapId && projectId && (
+			<CompareImageDetail
+				projectId={projectId}
+				snapShotId={snapId}
+				snapShotObject={pageSnapShotObject[snapId]}
+				snapShotUrl={pageSnapShotObject[snapId].url}
+				snapShotItemPath={pageSnapShotObject[snapId].path}
+				newestPageVisualSnapshot={first(
+					pageSnapShotObject[snapId].pageVisualSnapShot
+				)}
+			/>
+		)
 	);
 };

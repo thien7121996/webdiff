@@ -12,7 +12,8 @@ type Props = {
 
 const ProjectDetailPage: NextPageWithLayout = () => {
 	const router = useRouter();
-	const { projectId, snapShotId } = router.query;
+	const { projectId, snapshotId } = router.query;
+
 	return (
 		<>
 			<Breadcrumb
@@ -23,7 +24,7 @@ const ProjectDetailPage: NextPageWithLayout = () => {
 				<div className="container">
 					<CompareImagePage
 						projectId={projectId as string}
-						snapShotId={snapShotId as string}
+						snapShotId={snapshotId as string}
 					/>
 				</div>
 			</section>
