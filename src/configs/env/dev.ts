@@ -1,10 +1,10 @@
 import { Config } from '@/types/config';
 const config: Config = {
 	client: {
-		origin: 'http://localhost:3000',
+		origin: 'https://webdiff-green.vercel.app',
 	},
 	api: {
-		origin: 'http://localhost:3000/api',
+		origin: 'https://webdiff-green.vercel.app/api',
 	},
 	cookie: {
 		domain: '',
