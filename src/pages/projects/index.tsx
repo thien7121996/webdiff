@@ -6,23 +6,24 @@ import { NextPageWithLayout } from '@/pages/_app';
 import { ReactNode } from 'react';
 
 type Props = {
-  projecList: ProjectType[];
+	projecList: ProjectType[];
 };
 
 const Projects: NextPageWithLayout<Props> = ({ projecList }) => {
-  return (
-    <>
-      <Breadcrumb
-        pageName='Management Projects'
-        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero.'
-      />
-      <section className='pb-[120px]'>
-        <div className='container'>
-          <ListProject listProjectData={projecList} />
-        </div>
-      </section>
-    </>
-  );
+	const projectList = [];
+	return (
+		<>
+			<Breadcrumb
+				pageName="Management Projects"
+				description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
+			/>
+			<section className="pb-[120px]">
+				<div className="container">
+					<ListProject listProjectData={projecList} />
+				</div>
+			</section>
+		</>
+	);
 };
 
 export default Projects;

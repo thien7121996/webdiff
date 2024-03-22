@@ -3,20 +3,20 @@ import React, { FC, useState } from 'react';
 import { NotificationContext } from './Notification.context';
 
 type Props = {
-  children: React.ReactNode;
+	children: React.ReactNode;
 };
 
 /* Notification component */
 export const NotificationProvider: FC<Props> = ({ children }) => {
-  const [notification, setNotification] = useState<ShowNotification | null>(
-    null
-  );
+	const [notification, setNotification] = useState<ShowNotification | null>(
+		null
+	);
 
-  return (
-    <NotificationContext.Provider value={{ notification, setNotification }}>
-      {children}
-    </NotificationContext.Provider>
-  );
+	return (
+		<NotificationContext.Provider value={{ notification, setNotification }}>
+			{children}
+		</NotificationContext.Provider>
+	);
 };
 
 NotificationProvider.displayName = 'NotificationProvider';

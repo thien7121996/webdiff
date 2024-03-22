@@ -1,20 +1,20 @@
 // import { DiffImages } from '@/components/pages/CompareImageDetail/DiffImages';
 
 export const Snapshot = () => {
-  // const {
-  // 	diffRef,
-  // 	inputARef,
-  // 	diffCount,
-  // 	inputBRef,
-  // 	imageWrapperRef,
-  // 	imageACanvasRef,
-  // 	imageBCanvasRef,
-  // 	handleUploadImage,
-  // } = useCompareImage();
+	// const {
+	// 	diffRef,
+	// 	inputARef,
+	// 	diffCount,
+	// 	inputBRef,
+	// 	imageWrapperRef,
+	// 	imageACanvasRef,
+	// 	imageBCanvasRef,
+	// 	handleUploadImage,
+	// } = useCompareImage();
 
-  return (
-    <>
-      {/* Image A:
+	return (
+		<>
+			{/* Image A:
 			<input
 				// onChange={event => handleUploadImage(event, INPUT_TYPE.INPUT_A)}
 				ref={inputARef}
@@ -36,6 +36,6 @@ export const Snapshot = () => {
 				imageWrapperRef={imageWrapperRef}
 				diffRef={diffRef}
 			/> */}
-    </>
-  );
+		</>
+	);
 };

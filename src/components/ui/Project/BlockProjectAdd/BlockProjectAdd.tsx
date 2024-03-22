@@ -1,4 +1,3 @@
-import Loader from '@/components/admin/common/Loader';
 import { Modal } from '@/components/ui/Modal/Modal';
 import { InputBaseUrl } from '@/components/ui/Project/InputBaseUrl';
 import { useBooleanState } from '@/hooks/useBooleanState';
@@ -6,6 +5,7 @@ import { useHandleError } from '@/hooks/useHandleError';
 import { useNotification } from '@/hooks/useNotification';
 import useCurrentUser from '@/hooks/user.hook';
 import { ProjectType } from '@/models/project.model';
+import { addPageSnapShot } from '@/services/pageSnapShot';
 import { addProject } from '@/services/project';
 import { Cookie, getCookie } from '@/utils/cookie';
 import { Dispatch, FC, SetStateAction, useState } from 'react';
@@ -56,7 +56,6 @@ export const BlockProjectAdd: FC<Props> = ({ setReloadData }) => {
   ]);
   const [hasPageLogin, setHasPageLogin] = useState(false);
   const [isBasicAuth, setIsBacsicAuth] = useState(false);
-  const [isProccessing, setIsProccessing] = useState(false);
   const [dataProjectNew, setDataProjectNew] =
     useState<InfoProject>(dataDefaultProject);
 
@@ -71,7 +70,6 @@ export const BlockProjectAdd: FC<Props> = ({ setReloadData }) => {
   } = useBooleanState(false);
 
   const handleSubmit = async () => {
-    setIsProccessing(true);
     const uuid = getCookie(Cookie.UUID);
     if (!uuid) {
       return handleError(new Error('UUID not found'));
@@ -87,14 +85,22 @@ export const BlockProjectAdd: FC<Props> = ({ setReloadData }) => {
       return;
     }
 
+    // if (handleErrorInputBaseUrl()) {
+    // 	setNotification({
+    // 		type: 'error',
+    // 		message: 'Please fill in the base url field',
+    // 	});
+    // 	return;
+    // }
+
     try {
       const project: ProjectType = { ...dataProjectNew, userId: uuid };
 
       const projectRes = await addProject(project);
-      // await addPageSnapShot({
-      //   projectId: projectRes.id as string,
-      //   baseInfo: listBaseUrl,
-      // });
+      await addPageSnapShot({
+        projectId: projectRes.id as string,
+        baseInfo: listBaseUrl,
+      });
       setReloadData(true);
       setCloseModal();
       setNotification({
@@ -103,8 +109,6 @@ export const BlockProjectAdd: FC<Props> = ({ setReloadData }) => {
       });
     } catch (e) {
       handleError(e);
-    } finally {
-      setIsProccessing(false);
     }
   };
 
@@ -365,13 +369,7 @@ export const BlockProjectAdd: FC<Props> = ({ setReloadData }) => {
                 Add Url
               </button>
             </div>
-            <div className='flex w-full justify-end gap-10 px-4'>
-              {isProccessing && (
-                <div className='flex items-center gap-5 align-bottom font-bold'>
-                  <span>Processing...</span>
-                  <Loader />
-                </div>
-              )}
+            <div className='w-full px-4'>
               <button
                 onClick={handleSubmit}
                 className='shadow-submit rounded-2xl bg-primary px-4  py-2 text-base font-medium text-white duration-300 hover:bg-primary/90'
