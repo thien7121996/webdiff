@@ -35,7 +35,7 @@ export const Commit: FC<Props> = ({ commit }) => {
 
   useEffect(() => {
     setShortingUrl(commit.screenshotingUrl ?? '');
-  }, [commit.screenshotingUrl]);
+  }, [commit]);
 
   return (
     <>

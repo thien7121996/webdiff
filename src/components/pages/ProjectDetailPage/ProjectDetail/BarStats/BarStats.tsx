@@ -47,9 +47,9 @@ export const BarStats: FC<Props> = memo(
                 setIsScreenshoting(true);
               }}
               disabled={isPending}
-              className='ml-auto rounded-full bg-emerald-400 px-4 py-2 text-small font-bold text-white hover:bg-blue-700'
+              className='ml-auto flex gap-2 rounded-full bg-emerald-400 px-4 py-2 text-small font-bold text-white hover:bg-blue-700'
             >
-              {isScreenshoting && <Loader />}
+              {isScreenshoting && <Loader height='5' weight='5' />}
               Screenshot visual check
             </button>
           </div>
