@@ -4,16 +4,16 @@ import { httpClient } from '@/utils/httpClient';
  * @param data
  */
 export const addUserMeta = (data: {
-	userId: string;
-	rule: number;
+  userId: string;
+  rule: number;
 }): Promise<any> => {
-	return httpClient.post(`/user/create`, data);
+  return httpClient.post(`/user/create`, data);
 };
 
 export const getUser = (): Promise<any> => {
-	return httpClient.get(`/user/get`);
+  return httpClient.get(`/user/get`);
 };
 
 export const getUserInfo = (token?: string): Promise<any> => {
-	return httpClient.post(`/user/get/info`, { token });
+  return httpClient.post(`/user/get/info`, { token });
 };

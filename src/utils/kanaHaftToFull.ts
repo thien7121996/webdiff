@@ -1,7 +1,7 @@
 export const kanaHaftToFull = (str?: string) => {
-	if (!str) {
-		return '';
-	}
+  if (!str) {
+    return '';
+  }
 
-	return str.normalize('NFKC');
+  return str.normalize('NFKC');
 };

@@ -5,16 +5,16 @@ import { useCallback, useState } from 'react';
  * @param initial
  */
 export const useBooleanState = (initial = false) => {
-	const [boolean, setBoolean] = useState(initial);
+  const [boolean, setBoolean] = useState(initial);
 
-	const setTrue = useCallback(() => setBoolean(true), []);
+  const setTrue = useCallback(() => setBoolean(true), []);
 
-	const setFalse = useCallback(() => setBoolean(false), []);
+  const setFalse = useCallback(() => setBoolean(false), []);
 
-	const toggle = useCallback(() => setBoolean(prev => !prev), []);
+  const toggle = useCallback(() => setBoolean((prev) => !prev), []);
 
-	return Object.assign(
-		[boolean, setTrue, setFalse, toggle] as const,
-		{ boolean, setTrue, setFalse, toggle } as const
-	);
+  return Object.assign(
+    [boolean, setTrue, setFalse, toggle] as const,
+    { boolean, setTrue, setFalse, toggle } as const
+  );
 };
