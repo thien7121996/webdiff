@@ -1,0 +1,1 @@
+export { CommitsTabContent } from './CommitsTabContent';
