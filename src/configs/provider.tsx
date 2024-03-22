@@ -13,29 +13,29 @@ import { ThemeConfigProvider } from './themeConfig';
 const inter = Inter({ subsets: ['latin'] });
 
 const Providers: FC<PropsWithChildren> = ({ children }) => {
-  return (
-    <div className={inter.className}>
-      <TansTackProviders>
-        <AuthenticationProvider>
-          <ThemeConfigProvider>
-            <NextNProgress
-              height={5}
-              color={theme.colors.primary}
-              options={{ showSpinner: false }}
-            />
+	return (
+		<div className={inter.className}>
+			<TansTackProviders>
+				<AuthenticationProvider>
+					<ThemeConfigProvider>
+						<NextNProgress
+							height={5}
+							color={theme.colors.primary}
+							options={{ showSpinner: false }}
+						/>
 
-            {
-              <NotificationProvider>
-                {children}
-                <Notification />
-              </NotificationProvider>
-            }
-          </ThemeConfigProvider>
-        </AuthenticationProvider>
-        <ReactQueryDevtools initialIsOpen={false} />
-      </TansTackProviders>
-    </div>
-  );
+						{
+							<NotificationProvider>
+								{children}
+								<Notification />
+							</NotificationProvider>
+						}
+					</ThemeConfigProvider>
+				</AuthenticationProvider>
+				<ReactQueryDevtools initialIsOpen={false} />
+			</TansTackProviders>
+		</div>
+	);
 };
 
 export default Providers;

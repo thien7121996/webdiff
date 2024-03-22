@@ -1,5 +1,6 @@
 import { SkeletonLoader } from '@/components/admin/common/SkeletonLoader';
 import { BarStats } from './BarStats';
+import { PageSnapshotList } from './PageSnapshotList';
 import { useProjectDetail } from './projectDetail.hooks';
 
 export const ProjectDetail = () => {
@@ -32,7 +33,7 @@ export const ProjectDetail = () => {
         userNameBasicAuth={project.userNameBasicAuth}
         userNameLogin={project.userNameLogin}
       />
-      {/* <PageSnapshotList pageSnapshots={project.pageSnapshots} /> */}
+      <PageSnapshotList pageSnapshots={project.pageSnapshots} />
     </div>
   );
 };

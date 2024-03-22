@@ -1,1 +1,0 @@
-export { TablePageSnapshot } from './TablePageSnapshot';

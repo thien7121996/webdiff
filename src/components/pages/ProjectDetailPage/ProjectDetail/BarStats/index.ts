@@ -1,1 +1,0 @@
-export { BarStats } from './BarStats';

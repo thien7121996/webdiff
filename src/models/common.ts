@@ -1,4 +1,4 @@
 export type ShowNotification = {
-  type: string;
-  message: string;
+	type: string;
+	message: string;
 };

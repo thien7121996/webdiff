@@ -1,1 +1,0 @@
-export { HistoryCheckModal } from './HistoryCheckModal';

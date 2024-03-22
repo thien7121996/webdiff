@@ -3,32 +3,32 @@ import { useQuery } from '@tanstack/react-query';
 import { useCallback } from 'react';
 
 export const useImageFile = (
-  newestPageVisualSnapshotPath?: string,
-  snapShotPath?: string
+	newestPageVisualSnapshotPath?: string,
+	snapShotPath?: string
 ) => {
-  const handleConvertImageFile = useCallback(async () => {
-    if (!snapShotPath || !newestPageVisualSnapshotPath) {
-      return;
-    }
+	const handleConvertImageFile = useCallback(async () => {
+		if (!snapShotPath || !newestPageVisualSnapshotPath) {
+			return;
+		}
 
-    try {
-      const apiList = [
-        getImageFileFromFirebase(snapShotPath),
-        getImageFileFromFirebase(newestPageVisualSnapshotPath),
-      ];
+		try {
+			const apiList = [
+				getImageFileFromFirebase(snapShotPath),
+				getImageFileFromFirebase(newestPageVisualSnapshotPath),
+			];
 
-      const [baseImage, compareImage] = await Promise.all(apiList);
+			const [baseImage, compareImage] = await Promise.all(apiList);
 
-      return { baseImage, compareImage };
-    } catch (error) {
-      throw error;
-    }
-  }, [newestPageVisualSnapshotPath, snapShotPath]);
+			return { baseImage, compareImage };
+		} catch (error) {
+			throw error;
+		}
+	}, [newestPageVisualSnapshotPath, snapShotPath]);
 
-  const { data, isLoading } = useQuery({
-    queryKey: ['compareImages'],
-    queryFn: handleConvertImageFile,
-  });
+	const { data, isLoading } = useQuery({
+		queryKey: ['compareImages'],
+		queryFn: handleConvertImageFile,
+	});
 
-  return { data, isLoading };
+	return { data, isLoading };
 };

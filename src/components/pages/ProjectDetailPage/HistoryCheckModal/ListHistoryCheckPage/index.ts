@@ -1,1 +1,0 @@
-export { ListHistoryCheckPage } from './ListHistoryCheckPage';
