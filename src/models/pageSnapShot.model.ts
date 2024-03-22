@@ -1,3 +1,5 @@
+import { PageVisualSnapShot } from './pageVisualSnapshot.model';
+
 export type PageSnapShotType = {
   id?: string;
   url: string;
@@ -5,4 +7,5 @@ export type PageSnapShotType = {
   createAt?: string;
   updateAt?: string;
   isPagePrivate?: boolean;
+  pageVisualSnapShot?: PageVisualSnapShot[];
 };
