@@ -7,34 +7,34 @@ import { Inter } from 'next/font/google';
 import { ReactElement, ReactNode, useEffect, useState } from 'react';
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
-	getLayout?: (page: ReactElement) => ReactNode;
+  getLayout?: (page: ReactElement) => ReactNode;
 };
 
 type AppPropsWithLayout = AppProps & {
-	Component: NextPageWithLayout;
+  Component: NextPageWithLayout;
 };
 
 const inter = Inter({ subsets: ['latin'] });
 export default function App({ Component, pageProps }: AppPropsWithLayout) {
-	const getLayout = Component.getLayout || (page => page);
-	const [loading, setLoading] = useState<boolean>(true);
+  const getLayout = Component.getLayout || ((page) => page);
+  const [loading, setLoading] = useState<boolean>(true);
 
-	// const pathname = usePathname();
+  // const pathname = usePathname();
 
-	useEffect(() => {
-		setLoading(false);
-	}, []);
+  useEffect(() => {
+    setLoading(false);
+  }, []);
 
-	return (
-		<div
-			id="main-layout"
-			className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}
-		>
-			{loading ? (
-				<Loader />
-			) : (
-				<Providers>{getLayout(<Component {...pageProps} />)}</Providers>
-			)}
-		</div>
-	);
+  return (
+    <div
+      id='main-layout'
+      className={`bg-[#FCFCFC] dark:bg-black ${inter.className}`}
+    >
+      {loading ? (
+        <Loader />
+      ) : (
+        <Providers>{getLayout(<Component {...pageProps} />)}</Providers>
+      )}
+    </div>
+  );
 }

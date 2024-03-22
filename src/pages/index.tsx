@@ -8,52 +8,52 @@ import { useRouter } from 'next/router';
 import { ReactNode, useEffect } from 'react';
 
 export const metadata: Metadata = {
-	title: 'Free Next.js Template for Startup and SaaS',
-	description: 'This is Home for Startup Nextjs Template',
-	// other metadata
+  title: 'Free Next.js Template for Startup and SaaS',
+  description: 'This is Home for Startup Nextjs Template',
+  // other metadata
 };
 
 export default function Home() {
-	const { push } = useRouter();
-	const { user } = useAuthenticated();
+  const { push } = useRouter();
+  const { user } = useAuthenticated();
 
-	useEffect(() => {
-		if (user) {
-			push('/projects');
-		} else {
-			push('/signin');
-		}
-	}, [push, user]);
+  useEffect(() => {
+    if (user) {
+      push('/projects');
+    } else {
+      push('/signin');
+    }
+  }, [push, user]);
 
-	return (
-		<>
-			<ScrollUp />
-			<Hero />
-		</>
-	);
+  return (
+    <>
+      <ScrollUp />
+      <Hero />
+    </>
+  );
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-	const cookieToken = { value: '' };
-	const { cookie } = req.headers;
-	if (cookie) {
-		const cookieObject = parseCookieString(cookie);
-		if (cookieObject && cookieObject.uuid) {
-			return {
-				redirect: {
-					destination: '/projects',
-					permanent: false,
-				},
-			};
-		}
-	}
+  const cookieToken = { value: '' };
+  const { cookie } = req.headers;
+  if (cookie) {
+    const cookieObject = parseCookieString(cookie);
+    if (cookieObject && cookieObject.uuid) {
+      return {
+        redirect: {
+          destination: '/projects',
+          permanent: false,
+        },
+      };
+    }
+  }
 
-	return {
-		redirect: {
-			destination: '/signin',
-			permanent: false,
-		},
-	};
+  return {
+    redirect: {
+      destination: '/signin',
+      permanent: false,
+    },
+  };
 };
 
 Home.getLayout = (page: ReactNode) => <Layout>{page}</Layout>;
