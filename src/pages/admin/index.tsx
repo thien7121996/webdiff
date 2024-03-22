@@ -9,60 +9,60 @@ import { GetServerSideProps, Metadata } from 'next';
 import { ReactNode } from 'react';
 
 export const metadata: Metadata = {
-	title: 'Contact Page | Free Next.js Template for Startup and SaaS',
-	description: 'This is Contact Page for Startup Nextjs Template',
+  title: 'Contact Page | Free Next.js Template for Startup and SaaS',
+  description: 'This is Contact Page for Startup Nextjs Template',
 };
 
 const AdminPage = () => {
-	return <ECommerce />;
+  return <ECommerce />;
 };
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-	const cookieToken = { value: '' };
-	const { cookie } = req.headers;
-	if (cookie) {
-		const cookieObject = parseCookieString(cookie);
-		if (cookieObject) {
-			cookieToken.value = cookieObject.accessToken;
-		}
-	} else {
-		return {
-			redirect: {
-				destination: '/projects',
-				permanent: false,
-			},
-		};
-	}
+  const cookieToken = { value: '' };
+  const { cookie } = req.headers;
+  if (cookie) {
+    const cookieObject = parseCookieString(cookie);
+    if (cookieObject) {
+      cookieToken.value = cookieObject.accessToken;
+    }
+  } else {
+    return {
+      redirect: {
+        destination: '/projects',
+        permanent: false,
+      },
+    };
+  }
 
-	try {
-		const userInfo = await getUserInfo(cookieToken.value);
-		const key = uniqueId();
-		if (userInfo.data.rule === rule.ADMIN) {
-			return {
-				props: {
-					userInfo,
-					key,
-				},
-			};
-		}
+  try {
+    const userInfo = await getUserInfo(cookieToken.value);
+    const key = uniqueId();
+    if (userInfo.data.rule === rule.ADMIN) {
+      return {
+        props: {
+          userInfo,
+          key,
+        },
+      };
+    }
 
-		return {
-			redirect: {
-				destination: '/projects',
-				permanent: false,
-			},
-		};
-	} catch (error) {
-		return {
-			redirect: {
-				destination: '/projects',
-				permanent: false,
-			},
-		};
-	}
+    return {
+      redirect: {
+        destination: '/projects',
+        permanent: false,
+      },
+    };
+  } catch (error) {
+    return {
+      redirect: {
+        destination: '/projects',
+        permanent: false,
+      },
+    };
+  }
 };
 export default AdminPage;
 
 AdminPage.getLayout = (children: ReactNode) => (
-	<DefaultLayout>{children}</DefaultLayout>
+  <DefaultLayout>{children}</DefaultLayout>
 );

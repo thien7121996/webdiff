@@ -1,46 +1,47 @@
 import { Layout } from '@/components/layout';
 import Breadcrumb from '@/components/pages/Common/Breadcrumb';
-import { ListPageSnapShot } from '@/components/pages/ProjectDetail/ListPageSnapShot';
+import { ProjectDetailPage } from '@/components/pages/ProjectDetailPage';
 import { ProjectType } from '@/models/project.model';
 import { NextPageWithLayout } from '@/pages/_app';
-import { useRouter } from 'next/router';
+import { useParams } from 'next/navigation';
 import { ReactNode, useEffect, useState } from 'react';
 
 type Props = {
-	infoProjectDetail: ProjectType;
+  infoProjectDetail: ProjectType;
+};
+const ProjectDetail: NextPageWithLayout<Props> = ({ infoProjectDetail }) => {
+  const params = useParams();
+  const projectId =
+    typeof params?.projectId === 'string' ? params.projectId : '';
+  const [projectDetail, setProjectDetail] =
+    useState<ProjectType>(infoProjectDetail);
+
+  useEffect(() => {
+    setProjectDetail(infoProjectDetail);
+  }, [infoProjectDetail]);
+  return (
+    <>
+      <Breadcrumb
+        pageName='Page Snapshot'
+        description='Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero.'
+      />
+      <section className='pb-[120px] pt-[20px]'>
+        <div className='container'>
+          {projectId ? (
+            <ProjectDetailPage
+              projectId={projectId}
+              infoProjectDetail={projectDetail}
+              setProjectDetail={setProjectDetail}
+            />
+          ) : (
+            <div>Loading</div>
+          )}
+        </div>
+      </section>
+    </>
+  );
 };
 
-const ProjectDetailPage: NextPageWithLayout<Props> = ({
-	infoProjectDetail,
-}) => {
-	const [projectDetail, setProjectDetail] =
-		useState<ProjectType>(infoProjectDetail);
-	const router = useRouter();
+export default ProjectDetail;
 
-	const { projectId } = router.query;
-	useEffect(() => {
-		setProjectDetail(infoProjectDetail);
-	}, [infoProjectDetail]);
-
-	return (
-		<>
-			<Breadcrumb
-				pageName="Page Snapshot"
-				description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. In varius eros eget sapien consectetur ultrices. Ut quis dapibus libero."
-			/>
-			<section className="pb-[120px] pt-[20px]">
-				<div className="container">
-					<ListPageSnapShot
-						projectId={projectId as string}
-						infoProjectDetail={projectDetail}
-						setProjectDetail={setProjectDetail}
-					/>
-				</div>
-			</section>
-		</>
-	);
-};
-
-export default ProjectDetailPage;
-
-ProjectDetailPage.getLayout = (page: ReactNode) => <Layout>{page}</Layout>;
+ProjectDetail.getLayout = (page: ReactNode) => <Layout>{page}</Layout>;
