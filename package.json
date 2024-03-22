@@ -3,9 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+<<<<<<< HEAD
     "dev": "next dev --turbo",
     "build": "next build",
     "start": "next start",
+=======
+    "dev": "next dev --turbo -p 4001",
+    "build": "next build",
+    "start": "next start -p 4001",
+>>>>>>> 88925dbff9d0922579e6bdfde2e87263cadd543f
     "format": "prettier -w **/*.{ts,tsx,css}",
     "lint": "next lint && eslint --fix **/*.{ts,tsx} && prettier -w **/*.{ts,tsx}"
   },
