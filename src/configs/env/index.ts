@@ -10,11 +10,11 @@ const config = () => {
 
     case 'production':
       return {
-        client: { origin: 'http://localhost:4001' },
+        client: { origin: 'http://localhost:3000' },
         api: {
-          origin: 'http://localhost:4001/api',
+          origin: 'http://localhost:3000/api',
         },
-        queueServer: { origin: '' },
+        queueServer: { origin: 'http://localhost:3001' },
       };
 
     default:

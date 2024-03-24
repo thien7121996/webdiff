@@ -27,6 +27,7 @@ export const ProjectDetail: FC<Props> = ({
   const { projectId } = useParams();
   const { isError, isLoading, commits } = useCommits(projectId as string);
   const [isProccessing, setIsProccessing] = useState(false);
+  const [isTabVisualCheck, setIsTabVisualCheck] = useState<boolean>(false);
 
   useEffect(() => {
     const check = commits?.some((commit) => commit.screenshotingUrl !== null);
@@ -57,8 +58,13 @@ export const ProjectDetail: FC<Props> = ({
         urlList={urlList}
         infoProjectDetailId={infoProjectDetailId}
         isProccessing={isProccessing}
+        setIsTabVisualCheck={setIsTabVisualCheck}
       />
-      <Tabs pageSnapshot={pageSnapshot} reloadProject={reloadProject} />
+      <Tabs
+        pageSnapshot={pageSnapshot}
+        reloadProject={reloadProject}
+        isTabVisualCheck={isTabVisualCheck}
+      />
 
       {/* {infoProjectDetailId && <TablePageSnapshot />} */}
     </div>

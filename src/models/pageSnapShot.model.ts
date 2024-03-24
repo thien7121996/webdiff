@@ -1,4 +1,4 @@
-import { PageVisualSnapShot } from './pageVisualSnapshot.model';
+import { PageVisualSnapShot } from "./pageVisualSnapshot.model";
 
 export type PageSnapShotType = {
   id?: string;

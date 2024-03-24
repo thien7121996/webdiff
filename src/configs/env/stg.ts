@@ -1,10 +1,10 @@
 import { Config } from '@/types/config';
 const config: Config = {
   client: {
-    origin: 'https://webdiff-lovat.vercel.app',
+    origin: 'http://localhost:3000',
   },
   api: {
-    origin: 'https://webdiff-lovat.vercel.app/api',
+    origin: 'http://localhost:3000/api',
   },
   queueServer: { origin: 'https://socket-queue.onrender.com' },
   cookie: {

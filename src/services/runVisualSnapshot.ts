@@ -1,4 +1,6 @@
 import {
+  CheckTaskRequest,
+  CheckTaskResponse,
   CreateCommitDocsRequest,
   CreateCommitDocsResponse,
 } from '@/models/CreateCommitDocsType';
@@ -15,4 +17,19 @@ export const createVisualSnapshotDocs = async (
   request: CreateCommitDocsRequest
 ): Promise<CreateCommitDocsResponse> => {
   return await httpClient.post('/run-visual-snapshots/create-commit', request);
+};
+
+export const checkVisualRuning = async (
+  request: CheckTaskRequest
+): Promise<CheckTaskResponse> => {
+  return await httpClient.post('/run-visual-snapshots/check-runing', request);
+};
+
+export const cancelVisualRuning = async (
+  request: CheckTaskRequest
+): Promise<CheckTaskResponse> => {
+  return await httpClient.post(
+    '/run-visual-snapshots/cancel-run-visual',
+    request
+  );
 };
