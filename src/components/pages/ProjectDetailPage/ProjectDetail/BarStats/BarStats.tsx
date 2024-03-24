@@ -1,6 +1,6 @@
 import Loader from '@/components/admin/common/Loader';
 import { useParams } from 'next/navigation';
-import { FC, memo, useState } from 'react';
+import { Dispatch, FC, SetStateAction, memo, useState } from 'react';
 import { useVisualSnaps } from './runVisualSnaps.hooks';
 
 type Props = {
@@ -8,10 +8,17 @@ type Props = {
   infoProjectDetailId?: string;
   urlList: string[];
   isProccessing: boolean;
+  setIsTabVisualCheck: Dispatch<SetStateAction<boolean>>;
 };
 
 export const BarStats: FC<Props> = memo(
-  ({ countPages, infoProjectDetailId, urlList, isProccessing }) => {
+  ({
+    countPages,
+    infoProjectDetailId,
+    urlList,
+    isProccessing,
+    setIsTabVisualCheck,
+  }) => {
     const params = useParams();
     const [isScreenshoting, setIsScreenshoting] = useState(false);
 
@@ -45,11 +52,12 @@ export const BarStats: FC<Props> = memo(
               onClick={() => {
                 createCommitDocs();
                 setIsScreenshoting(true);
+                setIsTabVisualCheck(true);
               }}
               disabled={isPending}
-              className='ml-auto flex gap-2 rounded-full bg-emerald-400 px-4 py-2 text-small font-bold text-white hover:bg-blue-700'
+              className='mr-auto flex gap-5 rounded-full bg-purple-400 px-4 py-2 text-small font-bold text-white hover:bg-blue-700'
             >
-              {isScreenshoting && <Loader height='5' weight='5' />}
+              {isScreenshoting && <Loader width='5' height='5' />}
               Screenshot visual check
             </button>
           </div>

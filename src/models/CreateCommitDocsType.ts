@@ -12,3 +12,11 @@ export type CreateCommitDocsResponse = {
     visualCheckId: string;
   };
 };
+
+export type CheckTaskResponse = {
+  message: string;
+  data: boolean | string;
+};
+export type CheckTaskRequest = {
+  visualCheckId: string;
+};
