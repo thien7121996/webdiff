@@ -65,26 +65,28 @@ export const BarStats: FC<Props> = memo(
         {isError && <div>Error</div>}
         <div className='flex basis-1/2 flex-nowrap justify-between text-slate-950'>
           <div className='text-center'>
-            <h6 className='text-deep-purple-accent-400 text-3xl font-bold text-slate-950'>
+            <h6 className='text-deep-purple-accent-400 font-500 text-3xl text-slate-950'>
               {countPages}
             </h6>
             <p className='font-bold'>Pages</p>
           </div>
           <div className='text-center'>
-            <h6 className='text-deep-purple-accent-400 text-3xl font-bold text-slate-950'>
+            <h6 className='text-deep-purple-accent-400 font-500 text-3xl text-slate-950'>
               0
             </h6>
             <p className='font-bold'>Success</p>
           </div>
           <div className='text-center'>
-            <h6 className='text-deep-purple-accent-400 text-3xl font-bold'>
-              0
-            </h6>
+            <h6 className='text-deep-purple-accent-400 font-500 text-3xl'>0</h6>
             <p className='font-bold'>Failed</p>
           </div>
           <div className='text-center'>
-            <h6 className='text-deep-purple-accent-400 text-3xl font-bold'>
-              0
+            <h6 className='text-deep-purple-accent-400 font-500 text-3xl'>
+              {isScreenshoting ? (
+                <Loader width='5' height='5' />
+              ) : (
+                new Date().toLocaleTimeString()
+              )}
             </h6>
             <p className='font-bold'>Fnished at</p>
           </div>
