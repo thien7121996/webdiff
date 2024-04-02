@@ -20,7 +20,7 @@ export const HistoryCheckModal: FC<Props> = ({
     <Modal
       open={activeModal}
       onClose={setCloseModal}
-      isModalNotAlignCenter
+      $isModalNotAlignCenter
       isAllowClickOutsideToClose={true}
       widthModal={'90%'}
     >

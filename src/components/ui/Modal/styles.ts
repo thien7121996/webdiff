@@ -44,7 +44,7 @@ export const scrollTrack = css`
 `;
 
 export const ModalWrapper = styled.div<{
-  isModalNotAlignCenter?: boolean;
+  $isModalNotAlignCenter?: boolean;
   $isOpen?: boolean;
 }>`
   position: fixed;
@@ -55,8 +55,8 @@ export const ModalWrapper = styled.div<{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  justify-content: ${({ isModalNotAlignCenter }) =>
-    !isModalNotAlignCenter && 'center'};
+  justify-content: ${({ $isModalNotAlignCenter }) =>
+    !$isModalNotAlignCenter && 'center'};
   align-items: center;
   background: ${theme.colors.overlay};
   backdrop-filter: blur(3px);

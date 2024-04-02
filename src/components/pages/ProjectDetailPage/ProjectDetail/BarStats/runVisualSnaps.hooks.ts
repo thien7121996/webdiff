@@ -1,8 +1,5 @@
 import { useRevalidate } from '@/hooks/useRevalidate';
-import {
-  RunVisualSnapshotsRequest,
-  UrlType,
-} from '@/models/RunVisualSnapshotsType';
+import { RunVisualSnapshotsRequest } from '@/models/RunVisualSnapshotsType';
 import {
   createVisualSnapshotDocs,
   runVisualSnapshots,
@@ -18,13 +15,13 @@ export const useVisualSnaps = (projectId: string, urlList: string[]) => {
   }, [projectId, revalidate]);
 
   const run = useCallback(
-    async (projectId?: string, urlList?: UrlType[], visualCheckId?: string) => {
-      if (!projectId || !urlList?.length || !visualCheckId) {
+    async (projectId?: string, visualCheckId?: string) => {
+      if (!projectId || !visualCheckId) {
         return;
       }
 
       try {
-        await runVisualSnapshots({ projectId, urlList, visualCheckId });
+        await runVisualSnapshots({ projectId, visualCheckId });
       } catch (error) {
         // do nothing
       }
@@ -39,7 +36,7 @@ export const useVisualSnaps = (projectId: string, urlList: string[]) => {
   } = useMutation({
     mutationKey: [new Date()],
     mutationFn: (request: RunVisualSnapshotsRequest) =>
-      run(request.projectId, request.urlList, request.visualCheckId),
+      run(request.projectId, request.visualCheckId),
     onError: (error) => {
       // eslint-disable-next-line no-console
       console.log(error.message);
@@ -47,7 +44,7 @@ export const useVisualSnaps = (projectId: string, urlList: string[]) => {
   });
 
   const createDocs = useCallback(
-    async (projectId?: string, urlList?: string[]) => {
+    async (projectId?: string) => {
       try {
         if (!projectId || !urlList || !urlList.length) {
           return;
@@ -58,18 +55,17 @@ export const useVisualSnaps = (projectId: string, urlList: string[]) => {
 
         runVisualSnap({
           projectId,
-          urlList: response.data.urlList,
           visualCheckId: response.data.visualCheckId,
         });
       } catch (error) {
         throw error;
       }
     },
-    [revalidateCommits, runVisualSnap]
+    [revalidateCommits, runVisualSnap, urlList]
   );
 
   const { mutate: createCommitDocs } = useMutation({
-    mutationFn: () => createDocs(projectId, urlList),
+    mutationFn: () => createDocs(projectId),
     onError: (error) => {
       // eslint-disable-next-line no-console
       console.log(error.message);

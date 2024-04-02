@@ -100,7 +100,10 @@ const getCommitPageSnaps = async (commitId: string) => {
         path: data.path,
         diff: data.diff,
         match: data.match,
+        diffImage: data.diffImage,
+        diffPixel: data.diffPixel,
         createdAt: data.createdAt,
+        currentBasePath: data.currentBasePath,
       };
     });
   } catch (error) {

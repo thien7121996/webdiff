@@ -26,13 +26,13 @@ export const ItemCommit: FC<Props> = ({ urlShorting, commit }) => {
       setProgressShorting(100);
     }
   }, [commit.path]);
+
   return (
     <div className='border-blue-gray-50 text-blue-gray-500 font-normalfocus:outline-none relative whitespace-normal break-words border bg-white p-4 font-sans text-sm'>
       <div className='mb-2 flex items-center gap-3 text-gray-800'>
         <strong>Page Snapshot ID:</strong> {commit.id}
         <div className='center relative inline-block select-none whitespace-nowrap rounded-full align-baseline font-sans text-xs font-medium capitalize leading-none tracking-wide text-white'>
           <div className='mt-px'>
-            {' '}
             <svg
               xmlns='http://www.w3.org/2000/svg'
               viewBox='0 0 24 24'
@@ -85,7 +85,7 @@ export const ItemCommit: FC<Props> = ({ urlShorting, commit }) => {
                 className='-mt-px h-4 w-4 text-green-300'
               >
                 <path
-                  fill-rule='evenodd'
+                  fillRule='evenodd'
                   d='M8.603 3.799A4.49 4.49 0 0112 2.25c1.357 0 2.573.6 3.397 1.549a4.49 4.49 0 013.498 1.307 4.491 4.491 0 011.307 3.497A4.49 4.49 0 0121.75 12a4.49 4.49 0 01-1.549 3.397 4.491 4.491 0 01-1.307 3.497 4.491 4.491 0 01-3.497 1.307A4.49 4.49 0 0112 21.75a4.49 4.49 0 01-3.397-1.549 4.49 4.49 0 01-3.498-1.306 4.491 4.491 0 01-1.307-3.498A4.49 4.49 0 012.25 12c0-1.357.6-2.573 1.549-3.397a4.49 4.49 0 011.307-3.497 4.49 4.49 0 013.497-1.307zm7.007 6.387a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z'
                   clip-rule='evenodd'
                 ></path>
@@ -97,9 +97,9 @@ export const ItemCommit: FC<Props> = ({ urlShorting, commit }) => {
 
       {commit.path && (
         <div className='mb-2 block'>
-          <strong>Path screenshot:</strong>{' '}
+          <strong>Path screenshot:</strong>
           <a
-            href={commit.path}
+            href={commit.diffImage}
             target='_blank'
             className='text-blue-500 underline'
           >
@@ -108,7 +108,8 @@ export const ItemCommit: FC<Props> = ({ urlShorting, commit }) => {
         </div>
       )}
       <p className='flex gap-5 font-sans text-sm font-normal leading-normal text-gray-700 antialiased'>
-        <strong>Diff: </strong> 0 % <strong>Match:</strong> 0 %
+        <strong>Diff: </strong>
+        {commit.diff}% <strong>Match:</strong> {commit.match}%
       </p>
       <div className='mt-4 flex items-center gap-5'>
         <div className='flex items-center gap-1'>

@@ -1,5 +1,7 @@
+import { InfoBaseUrl } from '@/components/pages/ProjectDetailPage/AddNewPageSnapModal/AddNewPageSnapModal';
 import db from '@/configs/firebase';
 import { PageSnapShotType } from '@/models/pageSnapShot.model';
+import { SCREENSHOT_STATUS_TYPE } from '@/types';
 import { getDateCurrent } from '@/utils/getDateCurrent';
 import { addDoc, collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { some } from 'lodash';
@@ -10,11 +12,7 @@ type ResponseData = {
   message: string;
   id?: string;
 };
-type InforBaseUrl = {
-  index: number;
-  urlBase: string;
-  isPagePrivate: boolean;
-};
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ResponseData>
@@ -36,7 +34,7 @@ export default async function handler(
   try {
     const conditionArray = [handleIsProjectBelongToThisUser(projectId, userId)];
 
-    newPageSnapBaseUrls.forEach((newPageSnapBaseUrl: InforBaseUrl) =>
+    newPageSnapBaseUrls.forEach((newPageSnapBaseUrl: InfoBaseUrl) =>
       conditionArray.push(
         handleIsPageSnapshotExist(projectId, newPageSnapBaseUrl.urlBase)
       )
@@ -58,7 +56,7 @@ export default async function handler(
     }
 
     const saveList = newPageSnapBaseUrls.map(
-      (newPageSnapBaseUrl: InforBaseUrl) =>
+      (newPageSnapBaseUrl: InfoBaseUrl) =>
         handleAddNewPageSnapshot(projectId, newPageSnapBaseUrl)
     );
 
@@ -81,6 +79,7 @@ const handleIsPageSnapshotExist = async (
     db,
     `/projects/${projectId}/pageSnapShot`
   );
+
   try {
     const allPageSnapshotsSnap = await getDocs(pageSnapShotsRef);
     const allPageSnapshots = allPageSnapshotsSnap.docs.map((doc) => doc.data());
@@ -109,7 +108,7 @@ export const handleIsProjectBelongToThisUser = async (
 
 const handleAddNewPageSnapshot = async (
   projectId: string,
-  baseUrl: InforBaseUrl
+  baseUrl: InfoBaseUrl
 ) => {
   const pageSnapshotsRef = collection(
     db,
@@ -120,6 +119,7 @@ const handleAddNewPageSnapshot = async (
     createdAt: getDateCurrent(),
     url: baseUrl.urlBase,
     isPagePrivate: baseUrl.isPagePrivate,
+    screenshotStatus: SCREENSHOT_STATUS_TYPE.doing,
   };
 
   try {

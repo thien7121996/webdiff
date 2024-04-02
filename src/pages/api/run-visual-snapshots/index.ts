@@ -16,16 +16,15 @@ export default async function handler(
   }
 
   const { uuid: userId } = req.cookies;
-  const { urlList, projectId, visualCheckId } = req.body;
+  const { projectId, visualCheckId } = req.body;
 
-  if (!urlList.length || !userId || !projectId || !visualCheckId) {
+  if (!userId || !projectId || !visualCheckId) {
     res.status(400).end('Bad request');
     return;
   }
 
   try {
     await httpClient.post(`${config.queueServer.origin}/run-visual-snapshots`, {
-      urlList,
       userId,
       projectId,
       visualCheckId,

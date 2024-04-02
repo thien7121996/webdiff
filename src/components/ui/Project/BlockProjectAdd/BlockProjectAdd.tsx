@@ -1,6 +1,5 @@
 import Loader from '@/components/admin/common/Loader';
 import { Modal } from '@/components/ui/Modal/Modal';
-import { InputBaseUrl } from '@/components/ui/Project/InputBaseUrl';
 import { useBooleanState } from '@/hooks/useBooleanState';
 import { useHandleError } from '@/hooks/useHandleError';
 import { useNotification } from '@/hooks/useNotification';
@@ -14,13 +13,13 @@ type Props = {
   setReloadData: Dispatch<SetStateAction<boolean>>;
 };
 
-type InforBaseUrl = {
+type InfoBaseUrl = {
   index: number;
   urlBase: string;
   isPagePrivate: boolean;
 };
 
-const InfoUrlBaseDefault: InforBaseUrl = {
+const InfoUrlBaseDefault: InfoBaseUrl = {
   index: 0,
   urlBase: '',
   isPagePrivate: false,
@@ -51,7 +50,7 @@ const dataDefaultProject: InfoProject = {
 };
 export const BlockProjectAdd: FC<Props> = ({ setReloadData }) => {
   const [projectName, setProjectName] = useState<string>('');
-  const [listBaseUrl, setListBaseUrl] = useState<InforBaseUrl[]>([
+  const [listBaseUrl, setListBaseUrl] = useState<InfoBaseUrl[]>([
     InfoUrlBaseDefault,
   ]);
   const [hasPageLogin, setHasPageLogin] = useState(false);
@@ -158,7 +157,7 @@ export const BlockProjectAdd: FC<Props> = ({ setReloadData }) => {
       <Modal
         open={activeModal}
         onClose={setCloseModal}
-        isModalNotAlignCenter
+        $isModalNotAlignCenter
         isAllowClickOutsideToClose={true}
         widthModal='600px'
       >
@@ -348,14 +347,14 @@ export const BlockProjectAdd: FC<Props> = ({ setReloadData }) => {
             </div>
 
             <div className='hidden max-h-60 w-full overflow-y-scroll px-4 px-4'>
-              {listBaseUrl.map((item, index) => (
+              {/* {listBaseUrl.map((item, index) => (
                 <InputBaseUrl
                   key={index}
                   setListUrlBase={setListBaseUrl}
                   dataUrlBase={item}
                   listUrlBase={listBaseUrl}
                 />
-              ))}
+              ))} */}
             </div>
             <div className='hidden w-full px-4'>
               <button

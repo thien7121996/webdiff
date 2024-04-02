@@ -52,7 +52,6 @@ export default async function handler(
 
   try {
     const docRef = doc(db, 'projects', projectId);
-
     const docSnap = await getDoc(docRef);
 
     if (!docSnap.exists()) {
@@ -64,7 +63,6 @@ export default async function handler(
 
     res.status(200).json({ message: 'Get Project Success', data: projectData });
   } catch (e) {
-    // console.error(e);
     res.status(500).json({ message: 'Something went wrong' });
   }
 }
@@ -84,6 +82,7 @@ export const getPageSnapShot = async (
     projectDoc.id,
     pageSnapShotCollection
   );
+
   const childCollectionSnapshot = await getDocs(childCollectionRef);
 
   const childDocuments: PageSnapShot[] = await Promise.all(

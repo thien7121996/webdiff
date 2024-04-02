@@ -13,22 +13,21 @@ export default async function handler(
   }
 
   const { uuid: userId } = req.cookies;
-  const { urlList, projectId } = req.body;
+  const { visualCheckId } = req.body;
 
-  if (!urlList.length || !userId || !projectId) {
+  if (!userId || !visualCheckId) {
     res.status(400).end('Bad request');
     return;
   }
 
   try {
     const responseUrlList = await axios.post(
-      `${config.queueServer.origin}/run-visual-snapshots/create-visual-page-snapshot`,
+      `${config.queueServer.origin}/run-visual-snapshots/cancel-visual-page-snapshot`,
       {
-        urlList,
-        userId,
-        projectId,
+        visualCheckId,
       }
     );
+
     res.status(200).json({ message: 'OK', data: responseUrlList.data.data });
   } catch (error) {
     res.status(400).end('Some thing error');

@@ -10,7 +10,6 @@ export const useProjectDetail = (projectId: string) => {
   const get = useCallback(async (): Promise<ProjectType | undefined> => {
     try {
       const response = await getDetailProject(projectId);
-
       setPageSnapshotUrls(
         response.data?.pageSnapShot?.map(
           (page: PageSnapShotType) => page.url

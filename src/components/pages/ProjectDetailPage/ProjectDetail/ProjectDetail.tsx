@@ -1,39 +1,38 @@
-import { PageSnapShotType } from '@/models/pageSnapShot.model';
 import { useParams } from 'next/navigation';
 import { FC, useEffect, useState } from 'react';
 import { BarStats } from './BarStats';
 import { Tabs } from './Tabs';
 import { useCommits } from './Tabs/TabContent/CommitsTabContent/commits.hooks';
+import { useProjectDetailSocket } from './useProjectDetailSocket.hooks';
 
 type Props = {
-  pageSnapshot: PageSnapShotType[];
+  setNewPageModalOpen: () => void;
   infoProjectDetailName?: string;
   infoProjectDetailId?: string;
   pageSnapCount: number;
   urlList: string[];
-  setNewPageModalOpen: () => void;
-  reloadProject: () => void;
 };
 
 export const ProjectDetail: FC<Props> = ({
   infoProjectDetailName,
+  setNewPageModalOpen,
   infoProjectDetailId,
   pageSnapCount,
-  pageSnapshot,
   urlList,
-  setNewPageModalOpen,
-  reloadProject,
 }) => {
+  useProjectDetailSocket();
   const { projectId } = useParams();
-  const { isError, isLoading, commits } = useCommits(projectId as string);
-  const [isProccessing, setIsProccessing] = useState(false);
+  const { commits } = useCommits(projectId as string);
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [isTabVisualCheck, setIsTabVisualCheck] = useState<boolean>(false);
 
   useEffect(() => {
     const check = commits?.some((commit) => commit.screenshotingUrl !== null);
     if (check) {
-      setIsProccessing(true);
+      setIsProcessing(true);
     }
   }, [commits]);
+
   return (
     <div>
       <div className='ga mb-5 grid grid-cols-3 gap-4'>
@@ -56,11 +55,10 @@ export const ProjectDetail: FC<Props> = ({
         countPages={pageSnapCount}
         urlList={urlList}
         infoProjectDetailId={infoProjectDetailId}
-        isProccessing={isProccessing}
+        isProcessing={isProcessing}
+        setIsTabVisualCheck={setIsTabVisualCheck}
       />
-      <Tabs pageSnapshot={pageSnapshot} reloadProject={reloadProject} />
-
-      {/* {infoProjectDetailId && <TablePageSnapshot />} */}
+      <Tabs isTabVisualCheck={isTabVisualCheck} />
     </div>
   );
 };

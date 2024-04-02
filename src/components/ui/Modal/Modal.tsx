@@ -22,7 +22,7 @@ type Props = {
   onClose: () => void;
   children: React.ReactNode;
   title?: string;
-  isModalNotAlignCenter?: boolean;
+  $isModalNotAlignCenter?: boolean;
   isAllowClickOutsideToClose?: boolean;
   subTitle?: string;
   widthModal?: string;
@@ -38,7 +38,7 @@ export const Modal: FC<Props> = memo(
     onClose,
     children,
     title,
-    isModalNotAlignCenter,
+    $isModalNotAlignCenter,
     isAllowClickOutsideToClose = true,
     subTitle,
     widthModal,
@@ -81,7 +81,7 @@ export const Modal: FC<Props> = memo(
     return open ? (
       <ModalWrapper
         $isOpen={open}
-        isModalNotAlignCenter={isModalNotAlignCenter}
+        $isModalNotAlignCenter={$isModalNotAlignCenter}
       >
         <ModalContainer ref={ref} $isOpen={open} width={widthModal}>
           <CloseIcon onClick={onClose} src={CloseImage.src} />

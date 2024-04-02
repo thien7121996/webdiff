@@ -1,18 +1,16 @@
+import { InfoBaseUrl } from '@/components/pages/ProjectDetailPage/AddNewPageSnapModal/AddNewPageSnapModal';
 import { ProjectType } from '@/models/project.model';
+import { SCREENSHOT_STATUS_TYPE } from '@/types';
 import { httpClient } from '@/utils/httpClient';
 
-type InforBaseUrl = {
-  index: number;
-  urlBase: string;
-  isPagePrivate: boolean;
-};
 type pageSnapShotData = {
   projectId: string;
-  baseInfo: InforBaseUrl[];
+  baseInfo: InfoBaseUrl[];
+  screenshotStatus?: SCREENSHOT_STATUS_TYPE;
 };
 
-export const addPageSnapShot = (data: pageSnapShotData): Promise<any> => {
-  return httpClient.post(`/pagesnapshot/create`, data);
+export const addPageSnapShot = (request: pageSnapShotData): Promise<any> => {
+  return httpClient.post(`/pagesnapshot/create`, request);
 };
 
 export const getPageSnapShot = (projectId: string): Promise<ProjectType> => {

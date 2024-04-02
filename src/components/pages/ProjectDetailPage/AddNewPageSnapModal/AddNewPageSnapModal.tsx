@@ -1,84 +1,45 @@
+import Loader from '@/components/admin/common/Loader';
 import { Modal } from '@/components/ui/Modal';
 import { InputBaseUrl } from '@/components/ui/Project/InputBaseUrl';
-import { useNotification } from '@/hooks/useNotification';
-import { addPageSnapShot } from '@/services/pageSnapShot';
-import { AxiosError } from 'axios';
-import { useParams } from 'next/navigation';
+import { SCREENSHOT_STATUS_TYPE } from '@/types';
 import { FC, useState } from 'react';
+import { useAddPageSnapshot } from './useAddPageSnapshot.hooks';
 
 type Props = {
   open: boolean;
   onClose: () => void;
-  handleGetDetailProject: () => Promise<void>;
 };
-type InforBaseUrl = {
-  index: number;
+
+export type InfoBaseUrl = {
   urlBase: string;
   isPagePrivate: boolean;
+  screenshotStatus?: SCREENSHOT_STATUS_TYPE;
 };
-const InfoDefault: InforBaseUrl = {
-  index: 0,
+
+const infoDefault: InfoBaseUrl = {
   urlBase: '',
   isPagePrivate: false,
+  screenshotStatus: SCREENSHOT_STATUS_TYPE.doing,
 };
-export const AddNewPageSnapModal: FC<Props> = ({
-  open,
-  onClose,
-  handleGetDetailProject,
-}) => {
-  const [text, setText] = useState('');
-  const [listUrlBase, setListUrlBase] = useState<InforBaseUrl[]>([InfoDefault]);
-  const params = useParams();
-  const { setNotification } = useNotification();
 
-  const handleInput = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setText(event.target.value);
-  };
+export const AddNewPageSnapModal: FC<Props> = ({ open, onClose }) => {
+  const [newUrl, setNewUrl] = useState<InfoBaseUrl>(infoDefault);
+
+  const { mutate, isPending } = useAddPageSnapshot(onClose);
 
   const handleAddPageSnapshot = async () => {
-    if (handleErrorInputBaseUrl()) {
-      setNotification({
-        type: 'error',
-        message: 'Please fill in the required fields',
-      });
-      return;
-    }
-
-    try {
-      await addPageSnapShot({
-        projectId: params.projectId as string,
-        baseInfo: listUrlBase,
-      });
-
-      setNotification({
-        type: 'success',
-        message: 'Add page snapshot successfully',
-      });
-      handleGetDetailProject();
-      onClose();
-    } catch (error) {
-      const errorMessage = (error as AxiosError).response?.data as string;
-      setNotification({ type: 'error', message: errorMessage });
-    }
+    mutate(newUrl);
   };
 
-  const handleAddUrlBase = () => {
-    setListUrlBase((prev) => [
-      ...prev,
-      { ...InfoDefault, index: prev.length + 1 },
-    ]);
-  };
-
-  const handleErrorInputBaseUrl = () => {
-    const check = listUrlBase.some((item) => item.urlBase === '');
-    return check;
+  const handleGetTextUrl = (url: InfoBaseUrl) => {
+    setNewUrl(url);
   };
 
   return (
     <Modal
       open={open}
       onClose={onClose}
-      isModalNotAlignCenter
+      $isModalNotAlignCenter
       isAllowClickOutsideToClose={true}
       widthModal={'600px'}
     >
@@ -94,29 +55,14 @@ export const AddNewPageSnapModal: FC<Props> = ({
           Our support team will get back to you ASAP via email.
         </p>
         <div className='w-full'>
-          <div className='mb-8 max-h-60 overflow-y-scroll px-4'>
-            {listUrlBase.map((item, index) => (
-              <InputBaseUrl
-                key={index}
-                setListUrlBase={setListUrlBase}
-                dataUrlBase={item}
-                listUrlBase={listUrlBase}
-              />
-            ))}
-
-            <button
-              onClick={handleAddUrlBase}
-              className='shadow-submit mb-2 rounded-2xl bg-primary px-4  py-2 text-base font-medium text-white duration-300 hover:bg-primary/90'
-            >
-              Add Url
-            </button>
-          </div>
+          <InputBaseUrl onGetTextUrl={handleGetTextUrl} />
         </div>
         <div className='w-full px-4'>
           <button
             onClick={handleAddPageSnapshot}
-            className='shadow-submit w-full rounded-2xl bg-emerald-400 px-4  py-2 text-base font-medium text-white duration-300 hover:bg-primary/90'
+            className='shadow-submit flex w-full items-center justify-center gap-x-6 rounded-2xl bg-emerald-400 p-5  py-2 text-base font-medium text-white duration-300 hover:bg-primary/90'
           >
+            {isPending && <Loader />}
             Add new pages
           </button>
         </div>
