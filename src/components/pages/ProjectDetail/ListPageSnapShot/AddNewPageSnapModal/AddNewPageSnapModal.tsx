@@ -1,5 +1,4 @@
 import { Modal } from '@/components/ui/Modal';
-import { InputBaseUrl } from '@/components/ui/Project/InputBaseUrl';
 import { useNotification } from '@/hooks/useNotification';
 import { addPageSnapShot } from '@/services/pageSnapShot';
 import { AxiosError } from 'axios';
@@ -78,7 +77,6 @@ export const AddNewPageSnapModal: FC<Props> = ({
     <Modal
       open={open}
       onClose={onClose}
-      isModalNotAlignCenter
       isAllowClickOutsideToClose={true}
       widthModal={'600px'}
     >
@@ -95,15 +93,6 @@ export const AddNewPageSnapModal: FC<Props> = ({
         </p>
         <div className='w-full'>
           <div className='mb-8 max-h-60 overflow-y-scroll px-4'>
-            {listUrlBase.map((item, index) => (
-              <InputBaseUrl
-                key={index}
-                setListUrlBase={setListUrlBase}
-                dataUrlBase={item}
-                listUrlBase={listUrlBase}
-              />
-            ))}
-
             <button
               onClick={handleAddUrlBase}
               className='shadow-submit mb-2 rounded-2xl bg-primary px-4  py-2 text-base font-medium text-white duration-300 hover:bg-primary/90'
